@@ -1,444 +1,1969 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Ajmal Restaurant — Staff Dashboard</title>
+
   <style>
+
     * {
-      box-sizing: border-box
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      background: #f5f1e9;
-      color: #191713;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif
-    }
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-    header {
-      background: #15130f;
-      color: #fff;
-      padding: 18px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 5
-    }
-
-    h1,
-    h2 {
-      font-family: Georgia, serif;
-      margin: 0
-    }
-
-    .brand small {
-      display: block;
-      color: #d6b36a;
-      font: 11px Inter, sans-serif;
-      letter-spacing: 2px;
-      margin-top: 3px
+      background: #f4efe5;
+      color: #171512;
+      min-height: 100vh;
     }
 
     button,
-    select,
     input {
-      font: inherit
+      font: inherit;
     }
 
-    .btn {
-      border: 1px solid #ddd4c6;
-      background: #fff;
-      border-radius: 8px;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-weight: 700
-    }
 
-    .gold {
-      background: #b28a45;
-      color: #fff;
-      border-color: #b28a45
-    }
+    /* =====================================================
+       HEADER
+    ===================================================== */
 
-    .dark {
-      background: #28231b;
-      color: #fff;
-      border-color: #28231b
-    }
+    .header {
+      background: #11100e;
+      color: white;
 
-    main {
-      max-width: 1450px;
-      margin: auto;
-      padding: 25px
-    }
+      padding: 22px 40px;
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-bottom: 20px
-    }
-
-    .stat,
-    .card {
-      background: #fff;
-      border: 1px solid #e4ddd2;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px #2b24140d
-    }
-
-    .stat {
-      padding: 18px
-    }
-
-    .stat span {
-      color: #756f65;
-      font-size: 13px
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 28px;
-      margin-top: 7px
-    }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px
-    }
-
-    .toolbar input,
-    .toolbar select {
-      background: #fff;
-      border: 1px solid #dcd3c5;
-      border-radius: 8px;
-      padding: 10px 12px
-    }
-
-    .orders {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px
-    }
-
-    .order {
-      overflow: hidden
-    }
-
-    .order-head {
-      padding: 15px 16px;
-      border-bottom: 1px solid #eee6da;
-      display: flex;
-      justify-content: space-between
-    }
-
-    .time {
-      font-size: 12px;
-      color: #777
-    }
-
-    .badge {
-      padding: 5px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase
-    }
-
-    .received {
-      background: #fff0cf;
-      color: #865d16
-    }
-
-    .preparing {
-      background: #e7f0ff;
-      color: #285e9d
-    }
-
-    .ready {
-      background: #e4f4e8;
-      color: #267044
-    }
-
-    .completed {
-      background: #e8e7e4;
-      color: #5d5952
-    }
-
-    .body {
-      padding: 15px 16px
-    }
-
-    .meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      font-size: 13px
-    }
-
-    .meta small {
-      display: block;
-      color: #777;
-      text-transform: uppercase;
-      font-size: 10px;
-      margin-bottom: 2px
-    }
-
-    .items {
-      border-top: 1px solid #eee6da;
-      border-bottom: 1px solid #eee6da;
-      margin: 13px 0;
-      padding: 9px 0
-    }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      padding: 5px 0;
-      font-size: 14px
-    }
-
-    .total {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 900;
-      font-size: 17px
-    }
-
-    .notes {
-      background: #f8f5ef;
-      border-radius: 7px;
-      padding: 9px;
-      margin-top: 12px;
-      font-size: 13px
-    }
-
-    .actions {
-      display: flex;
-      gap: 7px;
-      padding: 13px 16px;
-      background: #faf8f4;
-      border-top: 1px solid #eee6da
-    }
-
-    .actions .btn {
-      flex: 1
-    }
-
-    .empty {
-      grid-column: 1/-1;
-      padding: 50px;
-      text-align: center;
-      background: #fff;
-      border: 1px dashed #cfc5b5;
-      border-radius: 12px;
-      color: #777
-    }
-
-    .section {
-      margin-top: 28px
-    }
-
-    .table-grid {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 9px
-    }
-
-    .table {
-      padding: 13px;
-      background: #fff;
-      border: 1px solid #ddd4c6;
-      border-radius: 9px;
-      text-align: center
-    }
-
-    .table.busy {
-      border-color: #d6b36a;
-      background: #fffaf0
-    }
-
-    .table b {
-      display: block;
-      font-size: 18px
-    }
-
-    .table small {
-      color: #777
-    }
-
-    .waiter {
-      margin-top: 28px
-    }
-
-    .call {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 17px;
-      border-bottom: 1px solid #eee6da
+
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .call:last-child {
-      border: 0
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
 
-    .call strong {
-      display: block
+    .brand h1 {
+      font-family: Georgia, serif;
+      font-size: 30px;
+      letter-spacing: 5px;
     }
 
-    .call small {
-      color: #777
+    .brand span {
+      color: #cba657;
+      font-size: 11px;
+      letter-spacing: 4px;
+      display: block;
+      margin-top: 3px;
     }
 
-    .ack {
+    .connection {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .connection-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d8a73c;
+    }
+
+    .connection-dot.online {
+      background: #3dbb72;
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    .login-screen {
+      min-height: calc(100vh - 90px);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 30px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+
+      background: white;
+
+      padding: 45px;
+
+      border: 1px solid #ddd4c5;
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.08);
+    }
+
+    .login-card .eyebrow {
+      color: #bd9545;
+
+      font-size: 11px;
+      font-weight: bold;
+
+      letter-spacing: 4px;
+
+      margin-bottom: 15px;
+    }
+
+    .login-card h2 {
+      font-family: Georgia, serif;
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .login-card p {
+      color: #777;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+
       font-size: 12px;
-      padding: 8px 10px
+      font-weight: bold;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 7px;
     }
 
-    @media(max-width:1050px) {
-      .orders {
-        grid-template-columns: repeat(2, 1fr)
+    .field input {
+      width: 100%;
+
+      padding: 14px 15px;
+
+      border: 1px solid #d8d0c3;
+
+      background: #faf8f4;
+
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: #cba657;
+    }
+
+    .gold-button {
+      width: 100%;
+
+      border: none;
+
+      background: #cba657;
+      color: #111;
+
+      padding: 15px;
+
+      font-weight: bold;
+      letter-spacing: 2px;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .gold-button:hover {
+      background: #b8903f;
+    }
+
+    .login-error {
+      color: #c62828;
+
+      background: #fff0f0;
+
+      border: 1px solid #efcaca;
+
+      padding: 12px;
+
+      margin-bottom: 15px;
+
+      display: none;
+
+      font-size: 14px;
+    }
+
+
+    /* =====================================================
+       DASHBOARD
+    ===================================================== */
+
+    .dashboard {
+      display: none;
+
+      max-width: 1400px;
+
+      margin: auto;
+
+      padding: 35px 40px 70px;
+    }
+
+    .dashboard-top {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 30px;
+    }
+
+    .dashboard-title h2 {
+      font-family: Georgia, serif;
+
+      font-size: 42px;
+
+      margin-bottom: 7px;
+    }
+
+    .dashboard-title p {
+      color: #777;
+    }
+
+    .logout-button {
+      border: 1px solid #cfc5b5;
+
+      background: transparent;
+
+      padding: 11px 18px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+    }
+
+    .logout-button:hover {
+      background: #111;
+      color: white;
+    }
+
+
+    /* =====================================================
+       STATS
+    ===================================================== */
+
+    .stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: white;
+
+      border: 1px solid #ddd4c5;
+
+      padding: 24px;
+    }
+
+    .stat-label {
+      color: #777;
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-family: Georgia, serif;
+
+      font-size: 38px;
+    }
+
+
+    /* =====================================================
+       WAITER REQUESTS
+    ===================================================== */
+
+    .section-header {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 15px;
+    }
+
+    .section-header h3 {
+      font-family: Georgia, serif;
+
+      font-size: 28px;
+    }
+
+    .refresh-button {
+      border: 1px solid #cfc5b5;
+
+      background: white;
+
+      padding: 9px 15px;
+
+      cursor: pointer;
+    }
+
+
+    .requests {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 18px;
+    }
+
+    .request-card {
+      background: white;
+
+      border: 1px solid #ddd4c5;
+
+      padding: 25px;
+
+      position: relative;
+
+      animation: appear .3s ease;
+    }
+
+    @keyframes appear {
+
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+    }
+
+    .request-card.new {
+      border-left:
+        5px solid #cba657;
+    }
+
+    .request-top {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-start;
+
+      margin-bottom: 18px;
+    }
+
+    .table-number {
+      font-family: Georgia, serif;
+
+      font-size: 32px;
+
+      font-weight: bold;
+    }
+
+    .status {
+      padding: 7px 11px;
+
+      font-size: 10px;
+
+      font-weight: bold;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+    }
+
+    .status.pending {
+      background: #fff1cc;
+      color: #8b671d;
+    }
+
+    .status.completed {
+      background: #dff5e8;
+      color: #267345;
+    }
+
+    .request-reason {
+      font-size: 21px;
+
+      line-height: 1.45;
+
+      margin-bottom: 15px;
+    }
+
+    .request-time {
+      color: #888;
+
+      font-size: 13px;
+
+      margin-bottom: 20px;
+    }
+
+    .complete-button {
+      width: 100%;
+
+      border: none;
+
+      background: #11100e;
+      color: white;
+
+      padding: 13px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+
+      letter-spacing: 1px;
+    }
+
+    .complete-button:hover {
+      background: #cba657;
+      color: #111;
+    }
+
+
+    /* =====================================================
+       EMPTY
+    ===================================================== */
+
+    .empty {
+      background: white;
+
+      border: 1px dashed #d4cbbb;
+
+      padding: 70px 20px;
+
+      text-align: center;
+
+      grid-column: 1 / -1;
+    }
+
+    .empty-icon {
+      font-size: 45px;
+
+      margin-bottom: 15px;
+    }
+
+    .empty h4 {
+      font-family: Georgia, serif;
+
+      font-size: 25px;
+
+      margin-bottom: 8px;
+    }
+
+    .empty p {
+      color: #888;
+    }
+
+
+    /* =====================================================
+       NOTIFICATION
+    ===================================================== */
+
+    .notification {
+      position: fixed;
+
+      right: 25px;
+      bottom: 25px;
+
+      width: 350px;
+
+      background: #11100e;
+      color: white;
+
+      padding: 20px;
+
+      box-shadow:
+        0 15px 45px rgba(0,0,0,.25);
+
+      transform:
+        translateY(150px);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: .3s;
+
+      z-index: 999;
+    }
+
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .notification-title {
+      color: #cba657;
+
+      font-size: 11px;
+
+      letter-spacing: 3px;
+
+      margin-bottom: 8px;
+    }
+
+    .notification h4 {
+      font-size: 22px;
+
+      margin-bottom: 5px;
+    }
+
+    .notification p {
+      color: #ddd;
+
+      line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 850px) {
+
+      .header {
+        padding: 18px 20px;
+      }
+
+      .brand h1 {
+        font-size: 23px;
+      }
+
+      .dashboard {
+        padding: 25px 18px 50px;
+      }
+
+      .dashboard-top {
+        align-items: flex-start;
+
+        gap: 15px;
+      }
+
+      .dashboard-title h2 {
+        font-size: 32px;
       }
 
       .stats {
-        grid-template-columns: repeat(2, 1fr)
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
-      .table-grid {
-        grid-template-columns: repeat(5, 1fr)
+      .requests {
+        grid-template-columns: 1fr;
       }
+
+      .connection {
+        display: none;
+      }
+
+      .login-card {
+        padding: 30px 22px;
+      }
+
+      .notification {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+
+        width: auto;
+      }
+
     }
 
-    @media(max-width:650px) {
-      main {
-        padding: 15px
-      }
-
-      .orders {
-        grid-template-columns: 1fr
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr
-      }
-
-      .table-grid {
-        grid-template-columns: repeat(3, 1fr)
-      }
-
-      header {
-        padding: 14px
-      }
-
-      .brand {
-        font-size: 14px
-      }
-    }
   </style>
 </head>
 
-<body>
-  <header>
-    <div class="brand"><strong>AJMAL RESTAURANT</strong><small>STAFF DASHBOARD</small></div>
-    <div><button class="btn dark" id="refresh">Refresh</button></div>
-  </header>
-  <main>
-    <section class="stats">
-      <div class="stat"><span>Today's Orders</span><strong id="ordersCount">0</strong></div>
-      <div class="stat"><span>Today's Sales</span><strong id="sales">KES 0</strong></div>
-      <div class="stat"><span>Preparing</span><strong id="preparing">0</strong></div>
-      <div class="stat"><span>Waiter Calls</span><strong id="waiterCount">0</strong></div>
-    </section>
 
-    <div class="toolbar">
-      <input id="search" placeholder="Search order, customer or table">
-      <select id="status">
-        <option value="all">All statuses</option>
-        <option>received</option>
-        <option>preparing</option>
-        <option>ready</option>
-        <option>completed</option>
-      </select>
-      <select id="type">
-        <option value="all">All types</option>
-        <option value="dinein">Dine In</option>
-        <option value="delivery">Delivery</option>
-        <option value="pickup">Pickup</option>
-      </select>
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="header">
+
+    <div class="brand">
+
+      <div>
+        <h1>AJMAL</h1>
+
+        <span>
+          RESTAURANT · NAIROBI
+        </span>
+      </div>
+
     </div>
 
-    <section class="orders" id="orders"></section>
 
-    <section class="section">
-      <h2>Table Status</h2>
-      <div class="table-grid" id="tables"></div>
-    </section>
+    <div class="connection">
 
-    <section class="section waiter card">
-      <h2 style="padding:16px 17px 8px">Waiter Calls</h2>
-      <div id="calls"></div>
-    </section>
+      <span
+        id="connectionDot"
+        class="connection-dot"
+      ></span>
+
+      <span id="connectionText">
+        Connecting...
+      </span>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       LOGIN
+  ====================================================== -->
+
+  <main
+    id="loginScreen"
+    class="login-screen"
+  >
+
+    <div class="login-card">
+
+      <div class="eyebrow">
+        AJMAL RESTAURANT
+      </div>
+
+      <h2>
+        Staff Login
+      </h2>
+
+      <p>
+        Sign in to receive customer waiter
+        requests in real time.
+      </p>
+
+
+      <div
+        id="loginError"
+        class="login-error"
+      ></div>
+
+
+      <form id="loginForm">
+
+        <div class="field">
+
+          <label for="email">
+            STAFF EMAIL
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="staff@ajmalrestaurant.com"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="password">
+            PASSWORD
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="Your password"
+            required
+          >
+
+        </div>
+
+
+        <button
+          class="gold-button"
+          type="submit"
+          id="loginButton"
+        >
+          SIGN IN
+        </button>
+
+      </form>
+
+    </div>
+
   </main>
 
-  <script>
-    const ORDER_KEY = "ajmalOrders", WAITER_KEY = "ajmalWaiterCalls";
-    const money = n => "KES " + Number(n || 0).toLocaleString("en-KE");
-    const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
-    const read = (k, d = []) => { try { return JSON.parse(localStorage.getItem(k) || JSON.stringify(d)) } catch { return d } };
-    const write = (k, v) => localStorage.setItem(k, JSON.stringify(v));
-    let orders = read(ORDER_KEY), calls = read(WAITER_KEY);
 
-    function render() {
-      const q = document.getElementById("search").value.toLowerCase(), st = document.getElementById("status").value, ty = document.getElementById("type").value;
-      const filtered = orders.filter(o => (st === "all" || o.status === st) && (ty === "all" || o.type === ty) && (`${o.id} ${o.customer} ${o.table}`.toLowerCase().includes(q)));
-      document.getElementById("orders").innerHTML = filtered.length ? filtered.map(o => `
- <article class="order card">
-  <div class="order-head"><div><b>${esc(o.id)}</b><div class="time">${new Date(o.createdAt || Date.now()).toLocaleString()}</div></div><span class="badge ${esc(o.status)}">${esc(o.status)}</span></div>
-  <div class="body">
-   <div class="meta"><div><small>Customer</small>${esc(o.customer || "—")}</div><div><small>Type</small>${esc((o.type || "").replace("dinein", "Dine In") || "—")}</div><div><small>Table</small>${esc(o.table || "—")}</div><div><small>Payment</small>${esc(o.payment === "mpesa" ? "M-Pesa" : o.payment || "—")}</div></div>
-   <div class="items">${(o.items || []).map(i => `<div class="item"><span>${esc(i.name)} × ${i.quantity}</span><b>${money(i.price * i.quantity)}</b></div>`).join("")}</div>
-   <div class="total"><span>Total</span><span>${money(o.total)}</span></div>
-   ${o.notes ? `<div class="notes"><b>Instructions</b><br>${esc(o.notes)}</div>` : ""}
+
+  <!-- =====================================================
+       DASHBOARD
+  ====================================================== -->
+
+  <main
+    id="dashboard"
+    class="dashboard"
+  >
+
+    <div class="dashboard-top">
+
+      <div class="dashboard-title">
+
+        <h2>
+          Staff Dashboard
+        </h2>
+
+        <p>
+          Manage customer requests from the dining room.
+        </p>
+
+      </div>
+
+
+      <button
+        id="logoutButton"
+        class="logout-button"
+      >
+        Logout
+      </button>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         STATS
+    ==================================================== -->
+
+    <section class="stats">
+
+      <div class="stat">
+
+        <div class="stat-label">
+          PENDING
+        </div>
+
+        <div
+          id="pendingCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-label">
+          TODAY
+        </div>
+
+        <div
+          id="todayCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-label">
+          COMPLETED
+        </div>
+
+        <div
+          id="completedCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-label">
+          STATUS
+        </div>
+
+        <div
+          id="staffStatus"
+          class="stat-value"
+          style="font-size:22px;"
+        >
+          Online
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         REQUESTS
+    ==================================================== -->
+
+    <section>
+
+      <div class="section-header">
+
+        <h3>
+          🔔 Waiter Requests
+        </h3>
+
+        <button
+          id="refreshButton"
+          class="refresh-button"
+        >
+          ↻ Refresh
+        </button>
+
+      </div>
+
+
+      <div
+        id="requests"
+        class="requests"
+      ></div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =====================================================
+       NOTIFICATION
+  ====================================================== -->
+
+  <div
+    id="notification"
+    class="notification"
+  >
+
+    <div class="notification-title">
+      NEW WAITER REQUEST
+    </div>
+
+    <h4 id="notificationTable">
+      Table
+    </h4>
+
+    <p id="notificationReason">
+      Customer needs assistance.
+    </p>
+
   </div>
-  <div class="actions">${nextButton(o)}</div>
- </article>`).join("") : `<div class="empty">No orders match your filters.</div>`;
 
-      const today = new Date().toDateString(), todays = orders.filter(o => new Date(o.createdAt || 0).toDateString() === today);
-      document.getElementById("ordersCount").textContent = todays.length;
-      document.getElementById("sales").textContent = money(todays.reduce((s, o) => s + Number(o.total || 0), 0));
-      document.getElementById("preparing").textContent = orders.filter(o => o.status === "preparing").length;
-      document.getElementById("waiterCount").textContent = calls.filter(c => !c.acknowledged).length;
-      renderTables(); renderCalls();
+
+
+  <!-- =====================================================
+       SUPABASE
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase-config.js?v=4"></script>
+
+
+  <script>
+
+    "use strict";
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const loginScreen =
+      document.getElementById(
+        "loginScreen"
+      );
+
+    const dashboard =
+      document.getElementById(
+        "dashboard"
+      );
+
+    const loginForm =
+      document.getElementById(
+        "loginForm"
+      );
+
+    const loginError =
+      document.getElementById(
+        "loginError"
+      );
+
+    const loginButton =
+      document.getElementById(
+        "loginButton"
+      );
+
+    const logoutButton =
+      document.getElementById(
+        "logoutButton"
+      );
+
+    const requestsContainer =
+      document.getElementById(
+        "requests"
+      );
+
+    const pendingCount =
+      document.getElementById(
+        "pendingCount"
+      );
+
+    const todayCount =
+      document.getElementById(
+        "todayCount"
+      );
+
+    const completedCount =
+      document.getElementById(
+        "completedCount"
+      );
+
+    const staffStatus =
+      document.getElementById(
+        "staffStatus"
+      );
+
+    const connectionDot =
+      document.getElementById(
+        "connectionDot"
+      );
+
+    const connectionText =
+      document.getElementById(
+        "connectionText"
+      );
+
+    const notification =
+      document.getElementById(
+        "notification"
+      );
+
+    const notificationTable =
+      document.getElementById(
+        "notificationTable"
+      );
+
+    const notificationReason =
+      document.getElementById(
+        "notificationReason"
+      );
+
+    const refreshButton =
+      document.getElementById(
+        "refreshButton"
+      );
+
+
+    /* =====================================================
+       SUPABASE
+    ===================================================== */
+
+    const supabaseClient =
+      window.ajmalSupabase;
+
+
+    if (!supabaseClient) {
+
+      alert(
+        "Supabase client was not loaded."
+      );
+
+      throw new Error(
+        "Supabase client unavailable."
+      );
     }
-    function nextButton(o) {
-      const next = { received: ["preparing", "Start Preparing"], preparing: ["ready", "Mark Ready"], ready: ["completed", "Complete Order"] }[o.status];
-      if (!next) return `<button class="btn" data-action="delete" data-id="${esc(o.id)}">Archive</button>`;
-      return `<button class="btn gold" data-action="${next[0]}" data-id="${esc(o.id)}">${next[1]}</button>`;
+
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let realtimeChannel = null;
+
+    let knownRequestIds =
+      new Set();
+
+
+    /* =====================================================
+       CONNECTION STATUS
+    ===================================================== */
+
+    function setConnection(
+      online,
+      text
+    ) {
+
+      connectionDot.classList.toggle(
+        "online",
+        online
+      );
+
+      connectionText.textContent =
+        text;
+
+      staffStatus.textContent =
+        online
+          ? "Online"
+          : "Offline";
     }
-    function renderTables() {
-      const map = {}; orders.filter(o => o.type === "dinein" && o.table && o.status !== "completed").forEach(o => map[o.table] = o);
-      document.getElementById("tables").innerHTML = Array.from({ length: 20 }, (_, i) => { let t = `T${String(i + 1).padStart(2, "0")}`, o = map[t]; return `<div class="table ${o ? "busy" : ""}"><b>${t}</b><small>${o ? esc(o.status) : "Available"}</small></div>` }).join("");
+
+
+    /* =====================================================
+       LOGIN ERROR
+    ===================================================== */
+
+    function showLoginError(
+      message
+    ) {
+
+      loginError.textContent =
+        message;
+
+      loginError.style.display =
+        "block";
     }
-    function renderCalls() {
-      document.getElementById("calls").innerHTML = calls.length ? calls.slice().reverse().map(c => `<div class="call"><div><strong>Table ${esc(c.table || "—")} — ${esc(c.reason || "Assistance needed")}</strong><small>${new Date(c.createdAt || Date.now()).toLocaleString()}</small></div>${c.acknowledged ? '<span class="ack">Acknowledged</span>' : `<button class="btn gold ack" data-call="${esc(c.id)}">Acknowledge</button>`}</div>`).join("") : "<div style='padding:18px;color:#777'>No waiter calls.</div>";
+
+
+    function hideLoginError() {
+
+      loginError.style.display =
+        "none";
     }
-    document.addEventListener("click", e => {
-      const b = e.target.closest("[data-action]"); if (b) { let o = orders.find(x => x.id === b.dataset.id); if (b.dataset.action === "delete") orders = orders.filter(x => x.id !== b.dataset.id); else if (o) { o.status = b.dataset.action; }; write(ORDER_KEY, orders); render(); }
-      const c = e.target.closest("[data-call]"); if (c) { let x = calls.find(x => x.id === c.dataset.call); if (x) x.acknowledged = true; write(WAITER_KEY, calls); render(); }
-    });
-    ["search", "status", "type"].forEach(id => document.getElementById(id).addEventListener("input", render));
-    document.getElementById("refresh").onclick = () => { orders = read(ORDER_KEY); calls = read(WAITER_KEY); render() };
-    window.addEventListener("storage", () => { orders = read(ORDER_KEY); calls = read(WAITER_KEY); render() });
-    render();
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    loginForm.addEventListener(
+      "submit",
+      async event => {
+
+        event.preventDefault();
+
+        hideLoginError();
+
+        loginButton.disabled =
+          true;
+
+        loginButton.textContent =
+          "SIGNING IN...";
+
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("password")
+            .value;
+
+
+        try {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .auth
+              .signInWithPassword({
+                email,
+                password
+              });
+
+
+          if (error) {
+
+            showLoginError(
+              error.message
+            );
+
+            return;
+          }
+
+
+          await showDashboard();
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+          showLoginError(
+            "Unable to sign in. Please try again."
+          );
+
+        } finally {
+
+          loginButton.disabled =
+            false;
+
+          loginButton.textContent =
+            "SIGN IN";
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    logoutButton.addEventListener(
+      "click",
+      async () => {
+
+        if (realtimeChannel) {
+
+          await supabaseClient
+            .removeChannel(
+              realtimeChannel
+            );
+
+          realtimeChannel =
+            null;
+        }
+
+
+        await supabaseClient
+          .auth
+          .signOut();
+
+
+        dashboard.style.display =
+          "none";
+
+        loginScreen.style.display =
+          "flex";
+
+        requestsContainer.innerHTML =
+          "";
+
+      }
+    );
+
+
+    /* =====================================================
+       SHOW DASHBOARD
+    ===================================================== */
+
+    async function showDashboard() {
+
+      loginScreen.style.display =
+        "none";
+
+      dashboard.style.display =
+        "block";
+
+
+      setConnection(
+        true,
+        "Connected"
+      );
+
+
+      await loadRequests();
+
+      startRealtime();
+
+    }
+
+
+    /* =====================================================
+       LOAD REQUESTS
+    ===================================================== */
+
+    async function loadRequests() {
+
+      requestsContainer.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">⏳</div>
+          <h4>Loading requests...</h4>
+          <p>Please wait.</p>
+        </div>
+      `;
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("waiter_calls")
+          .select("*")
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          )
+          .limit(100);
+
+
+      if (error) {
+
+        console.error(
+          "Load waiter requests error:",
+          error
+        );
+
+        requestsContainer.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">⚠️</div>
+            <h4>Could not load requests</h4>
+            <p>${escapeHTML(error.message)}</p>
+          </div>
+        `;
+
+        setConnection(
+          false,
+          "Database error"
+        );
+
+        return;
+      }
+
+
+      setConnection(
+        true,
+        "Connected"
+      );
+
+
+      renderRequests(
+        data || []
+      );
+    }
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+    function renderRequests(
+      requests
+    ) {
+
+      if (!requests.length) {
+
+        requestsContainer.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">🔔</div>
+            <h4>No waiter requests</h4>
+            <p>
+              New customer requests will appear here automatically.
+            </p>
+          </div>
+        `;
+
+        updateStats([]);
+
+        return;
+      }
+
+
+      requestsContainer.innerHTML =
+        requests
+          .map(
+            request =>
+              createRequestCard(
+                request
+              )
+          )
+          .join("");
+
+
+      requests.forEach(
+        request => {
+
+          knownRequestIds.add(
+            request.id
+          );
+
+        }
+      );
+
+
+      updateStats(
+        requests
+      );
+
+
+      attachCompleteButtons();
+    }
+
+
+    /* =====================================================
+       REQUEST CARD
+    ===================================================== */
+
+    function createRequestCard(
+      request
+    ) {
+
+      const isPending =
+        request.status ===
+        "pending";
+
+      const statusClass =
+        isPending
+          ? "pending"
+          : "completed";
+
+      const statusText =
+        isPending
+          ? "Pending"
+          : "Completed";
+
+
+      const created =
+        request.created_at
+          ? new Date(
+              request.created_at
+            )
+          : new Date();
+
+
+      const time =
+        created.toLocaleString(
+          [],
+          {
+            dateStyle:
+              "medium",
+            timeStyle:
+              "short"
+          }
+        );
+
+
+      return `
+        <article
+          class="request-card ${isPending ? "new" : ""}"
+          data-id="${escapeHTML(
+            String(request.id || "")
+          )}"
+        >
+
+          <div class="request-top">
+
+            <div class="table-number">
+              🪑 ${escapeHTML(
+                request.table_number ||
+                "Unknown"
+              )}
+            </div>
+
+            <span
+              class="status ${statusClass}"
+            >
+              ${statusText}
+            </span>
+
+          </div>
+
+
+          <div class="request-reason">
+            ${escapeHTML(
+              request.reason ||
+              "Customer needs assistance."
+            )}
+          </div>
+
+
+          <div class="request-time">
+            🕐 ${escapeHTML(time)}
+          </div>
+
+
+          ${
+            isPending
+              ? `
+                <button
+                  class="complete-button"
+                  data-request-id="${escapeHTML(
+                    String(request.id)
+                  )}"
+                >
+                  ✓ MARK AS COMPLETED
+                </button>
+              `
+              : ""
+          }
+
+        </article>
+      `;
+    }
+
+
+    /* =====================================================
+       COMPLETE BUTTONS
+    ===================================================== */
+
+    function attachCompleteButtons() {
+
+      document
+        .querySelectorAll(
+          ".complete-button"
+        )
+        .forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              async () => {
+
+                const id =
+                  button.dataset.requestId;
+
+
+                button.disabled =
+                  true;
+
+                button.textContent =
+                  "UPDATING...";
+
+
+                const {
+                  error
+                } =
+                  await supabaseClient
+                    .from(
+                      "waiter_calls"
+                    )
+                    .update({
+                      status:
+                        "completed"
+                    })
+                    .eq(
+                      "id",
+                      id
+                    );
+
+
+                if (error) {
+
+                  console.error(
+                    error
+                  );
+
+                  alert(
+                    "Could not update request:\n\n" +
+                    error.message
+                  );
+
+                  button.disabled =
+                    false;
+
+                  button.textContent =
+                    "✓ MARK AS COMPLETED";
+
+                  return;
+                }
+
+
+                await loadRequests();
+
+              }
+            );
+
+          }
+        );
+    }
+
+
+    /* =====================================================
+       REALTIME
+    ===================================================== */
+
+    function startRealtime() {
+
+      if (realtimeChannel) {
+
+        supabaseClient
+          .removeChannel(
+            realtimeChannel
+          );
+
+        realtimeChannel =
+          null;
+      }
+
+
+      realtimeChannel =
+        supabaseClient
+          .channel(
+            "ajmal-waiter-calls"
+          )
+
+
+          /* NEW REQUEST */
+          .on(
+            "postgres_changes",
+            {
+              event:
+                "INSERT",
+
+              schema:
+                "public",
+
+              table:
+                "waiter_calls"
+            },
+
+            payload => {
+
+              console.log(
+                "🔔 NEW WAITER REQUEST:",
+                payload.new
+              );
+
+
+              showNewRequestNotification(
+                payload.new
+              );
+
+
+              loadRequests();
+
+            }
+          )
+
+
+          /* STATUS UPDATE */
+          .on(
+            "postgres_changes",
+            {
+              event:
+                "UPDATE",
+
+              schema:
+                "public",
+
+              table:
+                "waiter_calls"
+            },
+
+            payload => {
+
+              console.log(
+                "🔄 WAITER REQUEST UPDATED:",
+                payload.new
+              );
+
+
+              loadRequests();
+
+            }
+          )
+
+
+          .subscribe(
+            status => {
+
+              console.log(
+                "Realtime status:",
+                status
+              );
+
+
+              if (
+                status ===
+                "SUBSCRIBED"
+              ) {
+
+                setConnection(
+                  true,
+                  "Live"
+                );
+
+              }
+
+
+              if (
+                status ===
+                "CHANNEL_ERROR"
+              ) {
+
+                setConnection(
+                  false,
+                  "Realtime error"
+                );
+
+              }
+
+            }
+          );
+    }
+
+
+    /* =====================================================
+       NEW REQUEST NOTIFICATION
+    ===================================================== */
+
+    function showNewRequestNotification(
+      request
+    ) {
+
+      notificationTable.textContent =
+        `Table ${
+          request.table_number ||
+          "Unknown"
+        }`;
+
+      notificationReason.textContent =
+        request.reason ||
+        "Customer needs assistance.";
+
+
+      notification.classList.add(
+        "show"
+      );
+
+
+      playNotificationSound();
+
+
+      setTimeout(
+        () => {
+
+          notification.classList.remove(
+            "show"
+          );
+
+        },
+        6000
+      );
+    }
+
+
+    /* =====================================================
+       SOUND
+    ===================================================== */
+
+    function playNotificationSound() {
+
+      try {
+
+        const AudioContext =
+          window.AudioContext ||
+          window.webkitAudioContext;
+
+
+        if (!AudioContext) {
+          return;
+        }
+
+
+        const audio =
+          new AudioContext();
+
+
+        const oscillator =
+          audio.createOscillator();
+
+        const gain =
+          audio.createGain();
+
+
+        oscillator.type =
+          "sine";
+
+        oscillator.frequency.value =
+          880;
+
+
+        gain.gain.setValueAtTime(
+          0.001,
+          audio.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.25,
+          audio.currentTime + 0.03
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.001,
+          audio.currentTime + 0.6
+        );
+
+
+        oscillator.connect(
+          gain
+        );
+
+        gain.connect(
+          audio.destination
+        );
+
+
+        oscillator.start();
+
+        oscillator.stop(
+          audio.currentTime + 0.6
+        );
+
+      } catch (error) {
+
+        console.log(
+          "Notification sound unavailable."
+        );
+
+      }
+    }
+
+
+    /* =====================================================
+       STATS
+    ===================================================== */
+
+    function updateStats(
+      requests
+    ) {
+
+      const pending =
+        requests.filter(
+          request =>
+            request.status ===
+            "pending"
+        ).length;
+
+
+      const completed =
+        requests.filter(
+          request =>
+            request.status ===
+            "completed"
+        ).length;
+
+
+      const today =
+        new Date()
+          .toISOString()
+          .slice(
+            0,
+            10
+          );
+
+
+      const todayRequests =
+        requests.filter(
+          request => {
+
+            if (!request.created_at) {
+              return false;
+            }
+
+            return request.created_at
+              .startsWith(
+                today
+              );
+          }
+        ).length;
+
+
+      pendingCount.textContent =
+        pending;
+
+      completedCount.textContent =
+        completed;
+
+      todayCount.textContent =
+        todayRequests;
+    }
+
+
+    /* =====================================================
+       REFRESH
+    ===================================================== */
+
+    refreshButton.addEventListener(
+      "click",
+      loadRequests
+    );
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHTML(
+      value
+    ) {
+
+      return String(value)
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+    }
+
+
+    /* =====================================================
+       CHECK EXISTING SESSION
+    ===================================================== */
+
+    async function checkSession() {
+
+      const {
+        data
+      } =
+        await supabaseClient
+          .auth
+          .getSession();
+
+
+      if (
+        data &&
+        data.session
+      ) {
+
+        await showDashboard();
+
+      } else {
+
+        loginScreen.style.display =
+          "flex";
+
+        dashboard.style.display =
+          "none";
+
+        setConnection(
+          false,
+          "Not signed in"
+        );
+
+      }
+    }
+
+
+    /* =====================================================
+       AUTH STATE
+    ===================================================== */
+
+    supabaseClient
+      .auth
+      .onAuthStateChange(
+        async (
+          event,
+          session
+        ) => {
+
+          console.log(
+            "Auth event:",
+            event
+          );
+
+
+          if (
+            session &&
+            (
+              event ===
+                "SIGNED_IN" ||
+              event ===
+                "INITIAL_SESSION"
+            )
+          ) {
+
+            await showDashboard();
+
+          }
+
+
+          if (
+            event ===
+            "SIGNED_OUT"
+          ) {
+
+            dashboard.style.display =
+              "none";
+
+            loginScreen.style.display =
+              "flex";
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    checkSession();
+
   </script>
-</body>
 
+</body>
 </html>
