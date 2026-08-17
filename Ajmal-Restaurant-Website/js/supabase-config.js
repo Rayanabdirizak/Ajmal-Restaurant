@@ -1,50 +1,26 @@
+"use strict";
+
 const SUPABASE_URL =
   "https://aenwlbazurdquwryqhce.supabase.co";
 
 const SUPABASE_ANON_KEY =
   "sb_publishable_Ip0apyRgiXPp1HQjAOV5wQ_gokmfUwv";
 
-const ajmalSupabase =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
+if (!window.supabase) {
+  console.error(
+    "❌ Supabase library has not loaded."
   );
-
-window.ajmalSupabase =
-  ajmalSupabase;
-
-
-/* =========================================================
-   DEBUG
-========================================================= */
-
-console.log(
-  "=== AJMAL SUPABASE DEBUG ==="
-);
-
-console.log(
-  "Supabase URL:",
-  SUPABASE_URL
-);
-
-console.log(
-  "Supabase client:",
-  window.ajmalSupabase
-);
-
-
-ajmalSupabase.auth
-  .getSession()
-  .then(({ data, error }) => {
-
-    console.log(
-      "Supabase session:",
-      data.session
+} else {
+  const ajmalSupabase =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
     );
 
-    console.log(
-      "Supabase auth error:",
-      error
-    );
+  window.ajmalSupabase =
+    ajmalSupabase;
 
-  });
+  console.log(
+    "✅ Ajmal Supabase client loaded successfully."
+  );
+}
