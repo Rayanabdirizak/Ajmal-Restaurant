@@ -1,13 +1,11 @@
 (() => {
   "use strict";
 
-
   /* =========================================================
      AJMAL RESTAURANT — CALL WAITER
   ========================================================= */
 
-  const TABLE_KEY =
-    "ajmalRestaurantTable";
+  const TABLE_KEY = "ajmalRestaurantTable";
 
 
   /* =========================================================
@@ -15,22 +13,10 @@
   ========================================================= */
 
   function getTable() {
-
     try {
-
-      return (
-        sessionStorage.getItem(
-          TABLE_KEY
-        ) || ""
-      );
-
+      return sessionStorage.getItem(TABLE_KEY) || "";
     } catch (error) {
-
-      console.error(
-        "Could not read table:",
-        error
-      );
-
+      console.error("Could not read table:", error);
       return "";
     }
   }
@@ -40,10 +26,7 @@
      SHOW MESSAGE
   ========================================================= */
 
-  function showMessage(
-    message
-  ) {
-
+  function showMessage(message) {
     alert(message);
   }
 
@@ -52,20 +35,15 @@
      CALL WAITER
   ========================================================= */
 
-  async function callWaiter(
-    reason
-  ) {
+  async function callWaiter(reason) {
 
-    const table =
-      getTable();
-
+    const table = getTable();
 
     /* -------------------------------------------------------
-       REQUIRE TABLE QR
+       CHECK TABLE
     ------------------------------------------------------- */
 
     if (!table) {
-
       showMessage(
         "Please scan your table QR code first."
       );
@@ -73,30 +51,32 @@
       return false;
     }
 
+    /* -------------------------------------------------------
+       CHECK REASON
+    ------------------------------------------------------- */
 
-    if (!reason) {
-
+    if (!reason || !reason.trim()) {
       return false;
     }
 
 
+    /* -------------------------------------------------------
+       REQUEST DATA
+
+       IMPORTANT:
+       Supabase uses "table_number", not "table_no".
+    ------------------------------------------------------- */
+
     const request = {
+      type: "waiter_call",
 
-      type:
-        "waiter_call",
+      table_number: table,
 
-      table_no:
-        table,
+      reason: reason.trim(),
 
-      reason:
-        reason,
+      status: "pending",
 
-      status:
-        "pending",
-
-      created_at:
-        new Date().toISOString()
-
+      created_at: new Date().toISOString()
     };
 
 
@@ -107,37 +87,46 @@
 
 
     /* -------------------------------------------------------
-       SUPABASE
+       CHECK SUPABASE
+    ------------------------------------------------------- */
+
+    if (!window.ajmalSupabase) {
+
+      console.error(
+        "Supabase client is not available."
+      );
+
+      showMessage(
+        "❌ Supabase is not connected."
+      );
+
+      return false;
+    }
+
+
+    /* -------------------------------------------------------
+       SEND TO SUPABASE
     ------------------------------------------------------- */
 
     try {
 
-      if (
-        !window.ajmalSupabase
-      ) {
-
-        throw new Error(
-          "Supabase client is not available."
-        );
-      }
-
-
       const {
+        data,
         error
-      } =
-        await window.ajmalSupabase
-          .from(
-            "waiter_calls"
-          )
-          .insert(
-            request
-          );
+      } = await window.ajmalSupabase
+        .from("waiter_calls")
+        .insert([request])
+        .select();
 
+
+      /* -----------------------------------------------------
+         SUPABASE ERROR
+      ----------------------------------------------------- */
 
       if (error) {
 
         console.error(
-          "Supabase error:",
+          "Supabase waiter error:",
           error
         );
 
@@ -150,13 +139,20 @@
       }
 
 
+      /* -----------------------------------------------------
+         SUCCESS
+      ----------------------------------------------------- */
+
       console.log(
-        "Waiter request sent successfully."
+        "✅ Waiter request saved:",
+        data
       );
 
 
       showMessage(
-        `🔔 Waiter called!\n\nTable: ${table}\nRequest: ${reason}`
+        `🔔 Waiter called successfully!\n\n` +
+        `Table: ${table}\n` +
+        `Request: ${reason}`
       );
 
 
@@ -170,12 +166,10 @@
         error
       );
 
-
       showMessage(
         "❌ Could not contact the waiter.\n\n" +
         error.message
       );
-
 
       return false;
     }
@@ -196,20 +190,23 @@
 
     if (!button) {
 
-      console.error(
-        "Call Waiter button not found."
+      console.warn(
+        "Call Waiter button was not found on this page."
       );
 
       return;
     }
 
 
+    /* -------------------------------------------------------
+       BUTTON CLICK
+    ------------------------------------------------------- */
+
     button.addEventListener(
       "click",
       async () => {
 
-        const table =
-          getTable();
+        const table = getTable();
 
 
         /* ---------------------------------------------------
@@ -227,23 +224,21 @@
 
 
         /* ---------------------------------------------------
-           REQUEST
+           ASK CUSTOMER
         --------------------------------------------------- */
 
-        const reason =
-          prompt(
-            `Table ${table}\n\n` +
-            "What do you need?\n\n" +
-            "Examples:\n" +
-            "• Please bring water\n" +
-            "• I need the bill\n" +
-            "• I am ready to order\n" +
-            "• I need assistance"
-          );
+        const reason = prompt(
+          `Table ${table}\n\n` +
+          "What do you need?\n\n" +
+          "Examples:\n" +
+          "• Please bring water\n" +
+          "• I need the bill\n" +
+          "• I am ready to order\n" +
+          "• I need assistance"
+        );
 
 
         if (!reason) {
-
           return;
         }
 
@@ -253,28 +248,47 @@
 
 
         if (!cleanReason) {
-
           return;
         }
 
 
-        button.disabled =
-          true;
+        /* ---------------------------------------------------
+           BUTTON LOADING
+        --------------------------------------------------- */
+
+        button.disabled = true;
 
         button.textContent =
           "⏳ Calling...";
 
 
-        await callWaiter(
-          cleanReason
-        );
+        /* ---------------------------------------------------
+           SEND REQUEST
+        --------------------------------------------------- */
+
+        const success =
+          await callWaiter(
+            cleanReason
+          );
 
 
-        button.disabled =
-          false;
+        /* ---------------------------------------------------
+           RESET BUTTON
+        --------------------------------------------------- */
+
+        button.disabled = false;
 
         button.textContent =
           "🔔 Call Waiter";
+
+
+        if (success) {
+
+          console.log(
+            "✅ Call Waiter completed."
+          );
+
+        }
 
       }
     );
@@ -291,8 +305,7 @@
   ========================================================= */
 
   if (
-    document.readyState ===
-    "loading"
+    document.readyState === "loading"
   ) {
 
     document.addEventListener(
@@ -303,6 +316,7 @@
   } else {
 
     setupCallWaiter();
+
   }
 
 
