@@ -178,13 +178,47 @@
         <div class="menu-empty" id="menuEmpty" hidden><strong>No dishes found.</strong><span>Try another search or
             category.</span></div>
 
-        <div class="menu-cta">
-          <div><span class="eyebrow">READY WHEN YOU ARE</span>
-            <h3>Add your favourites to the order.</h3>
-          </div>
-          <button class="button button-gold" id="openCartButton" type="button">View Your Order <b
-              id="cartCount">0</b></button>
-        </div>
+       <div class="menu-cta">
+
+  <div>
+    <span class="eyebrow">
+      READY WHEN YOU ARE
+    </span>
+
+    <h3>
+      Add your favourites to the order.
+    </h3>
+  </div>
+
+
+  <div class="menu-cta-actions">
+
+    <!-- CALL WAITER -->
+    <button
+      class="button button-waiter"
+      id="ajmalCallWaiterButton"
+      type="button"
+    >
+      🔔 Call Waiter
+    </button>
+
+
+    <!-- VIEW ORDER -->
+    <button
+      class="button button-gold"
+      id="openCartButton"
+      type="button"
+    >
+      View Your Order
+
+      <b id="cartCount">
+        0
+      </b>
+    </button>
+
+  </div>
+
+</div>
       </div>
     </section>
 
@@ -631,7 +665,13 @@
     </div>
   </div>
 
-  <script src="js/main.js"></script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="js/supabase-config.js"></script>
+
+<script src="js/call-waiter.js"></script>
+
+<script src="js/main.js"></script>
+
+</body>
 </html>

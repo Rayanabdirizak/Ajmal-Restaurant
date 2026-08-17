@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ajmal Restaurant — Staff Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: #f5f1e9;
+      color: #191713;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif
+    }
+
+    header {
+      background: #15130f;
+      color: #fff;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 5
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, serif;
+      margin: 0
+    }
+
+    .brand small {
+      display: block;
+      color: #d6b36a;
+      font: 11px Inter, sans-serif;
+      letter-spacing: 2px;
+      margin-top: 3px
+    }
+
+    button,
+    select,
+    input {
+      font: inherit
+    }
+
+    .btn {
+      border: 1px solid #ddd4c6;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700
+    }
+
+    .gold {
+      background: #b28a45;
+      color: #fff;
+      border-color: #b28a45
+    }
+
+    .dark {
+      background: #28231b;
+      color: #fff;
+      border-color: #28231b
+    }
+
+    main {
+      max-width: 1450px;
+      margin: auto;
+      padding: 25px
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 20px
+    }
+
+    .stat,
+    .card {
+      background: #fff;
+      border: 1px solid #e4ddd2;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px #2b24140d
+    }
+
+    .stat {
+      padding: 18px
+    }
+
+    .stat span {
+      color: #756f65;
+      font-size: 13px
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      margin-top: 7px
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px
+    }
+
+    .toolbar input,
+    .toolbar select {
+      background: #fff;
+      border: 1px solid #dcd3c5;
+      border-radius: 8px;
+      padding: 10px 12px
+    }
+
+    .orders {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px
+    }
+
+    .order {
+      overflow: hidden
+    }
+
+    .order-head {
+      padding: 15px 16px;
+      border-bottom: 1px solid #eee6da;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .time {
+      font-size: 12px;
+      color: #777
+    }
+
+    .badge {
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase
+    }
+
+    .received {
+      background: #fff0cf;
+      color: #865d16
+    }
+
+    .preparing {
+      background: #e7f0ff;
+      color: #285e9d
+    }
+
+    .ready {
+      background: #e4f4e8;
+      color: #267044
+    }
+
+    .completed {
+      background: #e8e7e4;
+      color: #5d5952
+    }
+
+    .body {
+      padding: 15px 16px
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      font-size: 13px
+    }
+
+    .meta small {
+      display: block;
+      color: #777;
+      text-transform: uppercase;
+      font-size: 10px;
+      margin-bottom: 2px
+    }
+
+    .items {
+      border-top: 1px solid #eee6da;
+      border-bottom: 1px solid #eee6da;
+      margin: 13px 0;
+      padding: 9px 0
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      font-size: 14px
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      font-size: 17px
+    }
+
+    .notes {
+      background: #f8f5ef;
+      border-radius: 7px;
+      padding: 9px;
+      margin-top: 12px;
+      font-size: 13px
+    }
+
+    .actions {
+      display: flex;
+      gap: 7px;
+      padding: 13px 16px;
+      background: #faf8f4;
+      border-top: 1px solid #eee6da
+    }
+
+    .actions .btn {
+      flex: 1
+    }
+
+    .empty {
+      grid-column: 1/-1;
+      padding: 50px;
+      text-align: center;
+      background: #fff;
+      border: 1px dashed #cfc5b5;
+      border-radius: 12px;
+      color: #777
+    }
+
+    .section {
+      margin-top: 28px
+    }
+
+    .table-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 9px
+    }
+
+    .table {
+      padding: 13px;
+      background: #fff;
+      border: 1px solid #ddd4c6;
+      border-radius: 9px;
+      text-align: center
+    }
+
+    .table.busy {
+      border-color: #d6b36a;
+      background: #fffaf0
+    }
+
+    .table b {
+      display: block;
+      font-size: 18px
+    }
+
+    .table small {
+      color: #777
+    }
+
+    .waiter {
+      margin-top: 28px
+    }
+
+    .call {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 17px;
+      border-bottom: 1px solid #eee6da
+    }
+
+    .call:last-child {
+      border: 0
+    }
+
+    .call strong {
+      display: block
+    }
+
+    .call small {
+      color: #777
+    }
+
+    .ack {
+      font-size: 12px;
+      padding: 8px 10px
+    }
+
+    @media(max-width:1050px) {
+      .orders {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .table-grid {
+        grid-template-columns: repeat(5, 1fr)
+      }
+    }
+
+    @media(max-width:650px) {
+      main {
+        padding: 15px
+      }
+
+      .orders {
+        grid-template-columns: 1fr
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .table-grid {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      header {
+        padding: 14px
+      }
+
+      .brand {
+        font-size: 14px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand"><strong>AJMAL RESTAURANT</strong><small>STAFF DASHBOARD</small></div>
+    <div><button class="btn dark" id="refresh">Refresh</button></div>
+  </header>
+  <main>
+    <section class="stats">
+      <div class="stat"><span>Today's Orders</span><strong id="ordersCount">0</strong></div>
+      <div class="stat"><span>Today's Sales</span><strong id="sales">KES 0</strong></div>
+      <div class="stat"><span>Preparing</span><strong id="preparing">0</strong></div>
+      <div class="stat"><span>Waiter Calls</span><strong id="waiterCount">0</strong></div>
+    </section>
+
+    <div class="toolbar">
+      <input id="search" placeholder="Search order, customer or table">
+      <select id="status">
+        <option value="all">All statuses</option>
+        <option>received</option>
+        <option>preparing</option>
+        <option>ready</option>
+        <option>completed</option>
+      </select>
+      <select id="type">
+        <option value="all">All types</option>
+        <option value="dinein">Dine In</option>
+        <option value="delivery">Delivery</option>
+        <option value="pickup">Pickup</option>
+      </select>
+    </div>
+
+    <section class="orders" id="orders"></section>
+
+    <section class="section">
+      <h2>Table Status</h2>
+      <div class="table-grid" id="tables"></div>
+    </section>
+
+    <section class="section waiter card">
+      <h2 style="padding:16px 17px 8px">Waiter Calls</h2>
+      <div id="calls"></div>
+    </section>
+  </main>
+
+  <script>
+    const ORDER_KEY = "ajmalOrders", WAITER_KEY = "ajmalWaiterCalls";
+    const money = n => "KES " + Number(n || 0).toLocaleString("en-KE");
+    const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
+    const read = (k, d = []) => { try { return JSON.parse(localStorage.getItem(k) || JSON.stringify(d)) } catch { return d } };
+    const write = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+    let orders = read(ORDER_KEY), calls = read(WAITER_KEY);
+
+    function render() {
+      const q = document.getElementById("search").value.toLowerCase(), st = document.getElementById("status").value, ty = document.getElementById("type").value;
+      const filtered = orders.filter(o => (st === "all" || o.status === st) && (ty === "all" || o.type === ty) && (`${o.id} ${o.customer} ${o.table}`.toLowerCase().includes(q)));
+      document.getElementById("orders").innerHTML = filtered.length ? filtered.map(o => `
+ <article class="order card">
+  <div class="order-head"><div><b>${esc(o.id)}</b><div class="time">${new Date(o.createdAt || Date.now()).toLocaleString()}</div></div><span class="badge ${esc(o.status)}">${esc(o.status)}</span></div>
+  <div class="body">
+   <div class="meta"><div><small>Customer</small>${esc(o.customer || "—")}</div><div><small>Type</small>${esc((o.type || "").replace("dinein", "Dine In") || "—")}</div><div><small>Table</small>${esc(o.table || "—")}</div><div><small>Payment</small>${esc(o.payment === "mpesa" ? "M-Pesa" : o.payment || "—")}</div></div>
+   <div class="items">${(o.items || []).map(i => `<div class="item"><span>${esc(i.name)} × ${i.quantity}</span><b>${money(i.price * i.quantity)}</b></div>`).join("")}</div>
+   <div class="total"><span>Total</span><span>${money(o.total)}</span></div>
+   ${o.notes ? `<div class="notes"><b>Instructions</b><br>${esc(o.notes)}</div>` : ""}
+  </div>
+  <div class="actions">${nextButton(o)}</div>
+ </article>`).join("") : `<div class="empty">No orders match your filters.</div>`;
+
+      const today = new Date().toDateString(), todays = orders.filter(o => new Date(o.createdAt || 0).toDateString() === today);
+      document.getElementById("ordersCount").textContent = todays.length;
+      document.getElementById("sales").textContent = money(todays.reduce((s, o) => s + Number(o.total || 0), 0));
+      document.getElementById("preparing").textContent = orders.filter(o => o.status === "preparing").length;
+      document.getElementById("waiterCount").textContent = calls.filter(c => !c.acknowledged).length;
+      renderTables(); renderCalls();
+    }
+    function nextButton(o) {
+      const next = { received: ["preparing", "Start Preparing"], preparing: ["ready", "Mark Ready"], ready: ["completed", "Complete Order"] }[o.status];
+      if (!next) return `<button class="btn" data-action="delete" data-id="${esc(o.id)}">Archive</button>`;
+      return `<button class="btn gold" data-action="${next[0]}" data-id="${esc(o.id)}">${next[1]}</button>`;
+    }
+    function renderTables() {
+      const map = {}; orders.filter(o => o.type === "dinein" && o.table && o.status !== "completed").forEach(o => map[o.table] = o);
+      document.getElementById("tables").innerHTML = Array.from({ length: 20 }, (_, i) => { let t = `T${String(i + 1).padStart(2, "0")}`, o = map[t]; return `<div class="table ${o ? "busy" : ""}"><b>${t}</b><small>${o ? esc(o.status) : "Available"}</small></div>` }).join("");
+    }
+    function renderCalls() {
+      document.getElementById("calls").innerHTML = calls.length ? calls.slice().reverse().map(c => `<div class="call"><div><strong>Table ${esc(c.table || "—")} — ${esc(c.reason || "Assistance needed")}</strong><small>${new Date(c.createdAt || Date.now()).toLocaleString()}</small></div>${c.acknowledged ? '<span class="ack">Acknowledged</span>' : `<button class="btn gold ack" data-call="${esc(c.id)}">Acknowledge</button>`}</div>`).join("") : "<div style='padding:18px;color:#777'>No waiter calls.</div>";
+    }
+    document.addEventListener("click", e => {
+      const b = e.target.closest("[data-action]"); if (b) { let o = orders.find(x => x.id === b.dataset.id); if (b.dataset.action === "delete") orders = orders.filter(x => x.id !== b.dataset.id); else if (o) { o.status = b.dataset.action; }; write(ORDER_KEY, orders); render(); }
+      const c = e.target.closest("[data-call]"); if (c) { let x = calls.find(x => x.id === c.dataset.call); if (x) x.acknowledged = true; write(WAITER_KEY, calls); render(); }
+    });
+    ["search", "status", "type"].forEach(id => document.getElementById(id).addEventListener("input", render));
+    document.getElementById("refresh").onclick = () => { orders = read(ORDER_KEY); calls = read(WAITER_KEY); render() };
+    window.addEventListener("storage", () => { orders = read(ORDER_KEY); calls = read(WAITER_KEY); render() });
+    render();
+  </script>
+</body>
+
+</html>

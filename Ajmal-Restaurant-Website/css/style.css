@@ -2513,3 +2513,69 @@ fieldset legend {
     }
 
 }
+
+/* =========================================================
+   AJMAL — CALL WAITER
+========================================================= */
+
+.menu-cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+
+.button-waiter {
+  background: #171612;
+  color: #ffffff;
+  border: 1px solid #c9a45d;
+  cursor: pointer;
+  min-height: 52px;
+  padding: 0 22px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.button-waiter:hover {
+  background: #c9a45d;
+  color: #171612;
+  transform: translateY(-2px);
+}
+
+
+.button-waiter:active {
+  transform: translateY(0);
+}
+
+
+.button-waiter:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .menu-cta-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+
+  .menu-cta-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+}
