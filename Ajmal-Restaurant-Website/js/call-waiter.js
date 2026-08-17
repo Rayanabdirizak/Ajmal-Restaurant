@@ -252,177 +252,75 @@
   }
 
 
-  /* =========================================================
-     CALL WAITER
-  ========================================================= */
-
   async function callWaiter(reason) {
 
-    /* -------------------------------------------------------
-       GET TABLE
-    ------------------------------------------------------- */
+  const table = getTable();
 
-    const table =
-      getTable();
+  if (!table) {
+    showMessage("Please scan your table QR code first.");
+    return false;
+  }
 
+  if (!reason || !reason.trim()) {
+    return false;
+  }
 
-    /* -------------------------------------------------------
-       REQUIRE TABLE
-    ------------------------------------------------------- */
+  const cleanReason = reason.trim();
 
-    if (!table) {
+  const request = {
+    type: "waiter_call",
+    table_number: table,
+    reason: cleanReason,
+    status: "pending",
+    created_at: new Date().toISOString()
+  };
 
-      showMessage(
-        "Please scan your table QR code first."
-      );
+  console.log("📤 Sending waiter request:", request);
 
-      return false;
-    }
+  if (!window.ajmalSupabase) {
+    showMessage("❌ Supabase is not connected.");
+    return false;
+  }
 
+  try {
 
-    /* -------------------------------------------------------
-       REQUIRE REASON
-    ------------------------------------------------------- */
+    // ✅ FIX: Removed .select()
+    const { error } =
+      await window.ajmalSupabase
+        .from("waiter_calls")
+        .insert([request]);
 
-    if (
-      !reason ||
-      !reason.trim()
-    ) {
-
-      return false;
-    }
-
-
-    const cleanReason =
-      reason.trim();
-
-
-    /* -------------------------------------------------------
-       SUPABASE REQUEST
-    ------------------------------------------------------- */
-
-    const request = {
-
-      type:
-        "waiter_call",
-
-      table_number:
-        table,
-
-      reason:
-        cleanReason,
-
-      status:
-        "pending",
-
-      created_at:
-        new Date().toISOString()
-
-    };
-
-
-    console.log(
-      "📤 Sending waiter request:",
-      request
-    );
-
-
-    /* -------------------------------------------------------
-       CHECK SUPABASE
-    ------------------------------------------------------- */
-
-    if (
-      !window.ajmalSupabase
-    ) {
-
-      console.error(
-        "Supabase client is not available."
-      );
-
-      showMessage(
-        "❌ Supabase is not connected."
-      );
-
-      return false;
-    }
-
-
-    /* -------------------------------------------------------
-       INSERT INTO SUPABASE
-    ------------------------------------------------------- */
-
-    try {
-
-      const {
-        data,
-        error
-      } =
-        await window.ajmalSupabase
-          .from(
-            "waiter_calls"
-          )
-          .insert([
-            request
-          ])
-          .select();
-
-
-      /* -----------------------------------------------------
-         ERROR
-      ----------------------------------------------------- */
-
-      if (error) {
-
-        console.error(
-          "❌ Supabase waiter error:",
-          error
-        );
-
-        showMessage(
-          "❌ Could not contact the waiter.\n\n" +
-          error.message
-        );
-
-        return false;
-      }
-
-
-      /* -----------------------------------------------------
-         SUCCESS
-      ----------------------------------------------------- */
-
-      console.log(
-        "✅ Waiter request saved:",
-        data
-      );
-
-
-      showMessage(
-        `🔔 Waiter called successfully!\n\n` +
-        `Table: ${table}\n` +
-        `Request: ${cleanReason}`
-      );
-
-
-      return true;
-
-    } catch (error) {
-
-      console.error(
-        "❌ Call waiter error:",
-        error
-      );
-
+    if (error) {
+      console.error("❌ Supabase waiter error:", error);
 
       showMessage(
         "❌ Could not contact the waiter.\n\n" +
         error.message
       );
 
-
       return false;
     }
+
+    showMessage(
+      `🔔 Waiter called successfully!\n\n` +
+      `Table: ${table}\n` +
+      `Request: ${cleanReason}`
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error("❌ Call waiter error:", error);
+
+    showMessage(
+      "❌ Could not contact the waiter.\n\n" +
+      error.message
+    );
+
+    return false;
   }
+}
 
 
   /* =========================================================
