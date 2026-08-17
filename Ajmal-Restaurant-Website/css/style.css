@@ -2593,3 +2593,428 @@ fieldset legend {
 .staff-login-link:hover {
   opacity: 1;
 }
+
+/* =====================================================
+   AJMAL RESTAURANT — CONTACT SECTION
+===================================================== */
+
+.restaurant-contact-section {
+  padding: 100px 20px;
+  background: #11100e;
+}
+
+.restaurant-contact-card {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 70px 50px;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.015)
+    );
+
+  border:
+    1px solid rgba(201,162,77,.25);
+
+  border-radius: 24px;
+}
+
+.section-eyebrow {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: #c9a24d;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.restaurant-contact-card h2,
+.delivery-info-inner h2 {
+  margin: 0 0 18px;
+
+  font-size: clamp(32px, 5vw, 52px);
+
+  line-height: 1.1;
+}
+
+.restaurant-address {
+  margin: 0 auto 35px;
+
+  color: rgba(255,255,255,.72);
+
+  font-size: 17px;
+
+  line-height: 1.8;
+}
+
+
+/* =====================================================
+   CONTACT BUTTONS
+===================================================== */
+
+.restaurant-contact-actions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 16px;
+
+  max-width: 850px;
+
+  margin: 0 auto;
+}
+
+.restaurant-contact-action {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px;
+
+  color: #fff;
+
+  text-decoration: none;
+
+  text-align: left;
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  border-radius: 14px;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.restaurant-contact-action:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(201,162,77,.6);
+
+  background:
+    rgba(201,162,77,.08);
+}
+
+.contact-icon {
+  font-size: 25px;
+}
+
+.restaurant-contact-action small {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #c9a24d;
+
+  font-size: 10px;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* =====================================================
+   OPENING HOURS
+===================================================== */
+
+.opening-hours {
+  max-width: 850px;
+
+  margin: 35px auto 0;
+
+  padding: 22px 25px;
+
+  border-top:
+    1px solid rgba(255,255,255,.1);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.1);
+}
+
+.hours-heading {
+  margin-bottom: 12px;
+
+  color: #c9a24d;
+
+  font-weight: 700;
+}
+
+.hours-row {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 25px;
+
+  color: rgba(255,255,255,.75);
+}
+
+.hours-row strong {
+  color: #fff;
+}
+
+
+/* =====================================================
+   DELIVERY
+===================================================== */
+
+.delivery-info-section {
+  padding: 100px 20px;
+
+  background: #f7f3eb;
+
+  color: #171512;
+
+  text-align: center;
+}
+
+.delivery-info-inner {
+  width: min(1100px, 100%);
+
+  margin: 0 auto;
+}
+
+.delivery-info-inner .section-eyebrow {
+  color: #9a742d;
+}
+
+.delivery-intro {
+  max-width: 650px;
+
+  margin: 0 auto 45px;
+
+  color: #666;
+
+  line-height: 1.7;
+}
+
+.delivery-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 18px;
+}
+
+.delivery-info-card {
+  padding: 30px 20px;
+
+  background: #fff;
+
+  border:
+    1px solid rgba(0,0,0,.08);
+
+  border-radius: 16px;
+}
+
+.delivery-info-card > span {
+  display: block;
+
+  margin-bottom: 15px;
+
+  font-size: 30px;
+}
+
+.delivery-info-card h3 {
+  margin: 0 0 10px;
+
+  font-size: 18px;
+}
+
+.delivery-info-card p {
+  margin: 0;
+
+  color: #666;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =====================================================
+   STAFF LOGIN
+===================================================== */
+
+.staff-login-footer {
+  padding: 25px;
+
+  background: #11100e;
+
+  text-align: center;
+}
+
+.staff-login-footer a {
+  color: #c9a24d;
+
+  text-decoration: none;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  opacity: .75;
+
+  transition: opacity .2s ease;
+}
+
+.staff-login-footer a:hover {
+  opacity: 1;
+}
+
+
+/* =====================================================
+   MOBILE ACTION BAR
+===================================================== */
+
+.mobile-action-bar {
+  display: none;
+}
+
+
+@media (max-width: 768px) {
+
+  .restaurant-contact-section {
+    padding: 70px 16px;
+  }
+
+  .restaurant-contact-card {
+    padding: 45px 20px;
+  }
+
+  .restaurant-contact-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-contact-action {
+    padding: 17px;
+  }
+
+  .hours-row {
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .delivery-info-section {
+    padding: 70px 16px;
+  }
+
+  .delivery-info-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
+  /* MOBILE BOTTOM BAR */
+
+  .mobile-action-bar {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 68px;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    z-index: 9999;
+
+    background:
+      rgba(17,16,14,.97);
+
+    border-top:
+      1px solid rgba(201,162,77,.35);
+
+    padding-bottom:
+      env(safe-area-inset-bottom);
+
+    backdrop-filter:
+      blur(10px);
+  }
+
+
+  .mobile-action-bar a {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 3px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 20px;
+  }
+
+
+  .mobile-action-bar a:hover {
+    color: #c9a24d;
+  }
+
+
+  .mobile-action-bar small {
+
+    color: rgba(255,255,255,.8);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+  }
+
+
+  body {
+    padding-bottom: 75px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .delivery-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-contact-card h2,
+  .delivery-info-inner h2 {
+    font-size: 34px;
+  }
+
+}
