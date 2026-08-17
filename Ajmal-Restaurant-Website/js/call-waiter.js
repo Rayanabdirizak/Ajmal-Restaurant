@@ -251,47 +251,86 @@
     }
   }
 
-
-  async function callWaiter(reason) {
+//
+async function callWaiter(reason) {
 
   const table = getTable();
 
+  // Check table
   if (!table) {
-    showMessage("Please scan your table QR code first.");
+
+    showMessage(
+      "Please scan your table QR code first."
+    );
+
     return false;
   }
 
+
+  // Check reason
   if (!reason || !reason.trim()) {
     return false;
   }
 
-  const cleanReason = reason.trim();
 
+  const cleanReason =
+    reason.trim();
+
+
+  // Request sent to Supabase
   const request = {
+
     type: "waiter_call",
+
     table_number: table,
+
     reason: cleanReason,
+
     status: "pending",
-    created_at: new Date().toISOString()
+
+    created_at:
+      new Date().toISOString()
+
   };
 
-  console.log("📤 Sending waiter request:", request);
 
+  console.log(
+    "📤 Sending waiter request:",
+    request
+  );
+
+
+  // Check Supabase
   if (!window.ajmalSupabase) {
-    showMessage("❌ Supabase is not connected.");
+
+    console.error(
+      "Supabase client is not available."
+    );
+
+    showMessage(
+      "❌ Supabase is not connected."
+    );
+
     return false;
   }
 
+
+  // Send request
   try {
 
-    // ✅ FIX: Removed .select()
     const { error } =
       await window.ajmalSupabase
         .from("waiter_calls")
         .insert([request]);
 
+
+    // Supabase error
     if (error) {
-      console.error("❌ Supabase waiter error:", error);
+
+      console.error(
+        "❌ Supabase waiter error:",
+        error
+      );
 
       showMessage(
         "❌ Could not contact the waiter.\n\n" +
@@ -301,22 +340,36 @@
       return false;
     }
 
+
+    // Success
+    console.log(
+      "✅ Waiter request saved successfully."
+    );
+
+
     showMessage(
       `🔔 Waiter called successfully!\n\n` +
       `Table: ${table}\n` +
       `Request: ${cleanReason}`
     );
 
+
     return true;
+
 
   } catch (error) {
 
-    console.error("❌ Call waiter error:", error);
+    console.error(
+      "❌ Call waiter error:",
+      error
+    );
+
 
     showMessage(
       "❌ Could not contact the waiter.\n\n" +
       error.message
     );
+
 
     return false;
   }
