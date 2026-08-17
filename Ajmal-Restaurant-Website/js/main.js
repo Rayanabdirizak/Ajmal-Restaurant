@@ -3504,8 +3504,8 @@
   ======================================================= */
 
   checkoutForm?.addEventListener(
-    'submit',
-    event => {
+  'submit',
+  async event => {
 
       event.preventDefault();
 
@@ -3648,13 +3648,133 @@
         deliveryFee;
 
 
-      const orderLines =
-        cart.map(item =>
-          `• ${item.name} × ${item.quantity} — ${money(
-            item.price *
-            item.quantity
-          )}`
-        );
+const orderLines =
+  cart.map(item =>
+    `• ${item.name} × ${item.quantity} — ${money(
+      item.price *
+      item.quantity
+    )}`
+  );
+
+
+/* =======================================================
+   SAVE ORDER TO SUPABASE
+======================================================= */
+
+const supabaseClient =
+  window.ajmalSupabase;
+
+if (!supabaseClient) {
+
+  alert(
+    '❌ Order system is unavailable.\n\nPlease try again.'
+  );
+
+  console.error(
+    'Supabase client is not available.'
+  );
+
+  return;
+}
+
+const orderItems =
+  cart.map(item => ({
+    id: item.id,
+    name: item.name,
+    quantity: Number(item.quantity),
+    price: Number(item.price),
+    subtotal:
+      Number(item.price) *
+      Number(item.quantity)
+  }));
+
+const orderData = {
+
+  order_number:
+    orderNumber,
+
+  customer_name:
+    name,
+
+  customer_phone:
+    phone,
+
+  order_type:
+    orderType,
+
+  table_number:
+    orderType === 'dinein'
+      ? currentTable
+      : null,
+
+  delivery_location:
+    orderType === 'delivery'
+      ? location
+      : null,
+
+  delivery_address:
+    orderType === 'delivery'
+      ? address
+      : null,
+
+  payment_method:
+    payment,
+
+  items:
+    orderItems,
+
+  notes:
+    notes || null,
+
+  subtotal:
+    Number(subtotal),
+
+  delivery_fee:
+    Number(deliveryFee),
+
+  total:
+    Number(total),
+
+  status:
+    'pending'
+};
+
+console.log(
+  '🍽️ Saving Ajmal order:',
+  orderData
+);
+
+const {
+  error: orderError
+} =
+  await supabaseClient
+    .from('orders')
+    .insert([orderData]);
+
+if (orderError) {
+
+  console.error(
+    '❌ Order database error:',
+    orderError
+  );
+
+  alert(
+    '❌ Your order could not be sent to the restaurant.\n\n' +
+    orderError.message
+  );
+
+  return;
+}
+
+console.log(
+  '✅ Order saved to Supabase:',
+  orderNumber
+);
+
+
+/* =======================================================
+   YOUR EXISTING WHATSAPP CODE CONTINUES BELOW
+======================================================= */
 
 
       /*
