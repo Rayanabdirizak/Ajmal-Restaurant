@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,9 +16,100 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <style id="ajmal-critical-fixes">
+    /* The menu uses the HTML hidden attribute for its empty state.
+       This guarantees the message stays invisible when dishes exist. */
+    #menuEmpty[hidden] {
+      display: none !important;
+    }
+
+    /* Make phone/WhatsApp links clearly usable on mobile. */
+    .ajmal-phone-link {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .ajmal-phone-link:hover {
+      text-decoration: underline;
+    }
+
+    .why-ajmal-section,
+    .reviews-section {
+      padding: 90px 0;
+    }
+
+    .why-ajmal-grid,
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 42px;
+    }
+
+    .why-ajmal-card,
+    .review-card {
+      background: #fff;
+      border: 1px solid rgba(17, 16, 13, 0.12);
+      padding: 32px;
+    }
+
+    .why-ajmal-card span {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .why-ajmal-card h3,
+    .review-card h3 {
+      margin: 0 0 12px;
+    }
+
+    .why-ajmal-card p,
+    .review-card p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .review-card .stars {
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .review-note {
+      margin-top: 28px;
+      font-size: 14px;
+      opacity: .75;
+    }
+
+    .contact-phone-row {
+      margin-top: 18px;
+    }
+
+    .contact-phone-row a {
+      font-size: 20px;
+    }
+
+    @media (max-width: 800px) {
+      .why-ajmal-grid,
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
+
+  <noscript>
+    <div style="padding:16px;text-align:center;background:#fff3cd;color:#664d03;">
+      Please enable JavaScript to view the interactive Ajmal menu and ordering system.
+    </div>
+  </noscript>
+
 
   <header class="site-header" id="siteHeader">
     <a class="brand" href="#home" aria-label="Ajmal Restaurant home">
@@ -91,6 +183,54 @@
               best place to be.</p>
             <a class="text-link" href="#menu">Explore what we're serving <span>→</span></a>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         WHY AJMAL
+    ===================================================== -->
+    <section class="why-ajmal-section page-section" id="why-ajmal">
+      <div class="page-width">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker left">
+              <span></span> WHY AJMAL
+            </div>
+            <h2 class="section-title">
+              More reasons to <em>stay awhile.</em>
+            </h2>
+          </div>
+        </div>
+
+        <div class="why-ajmal-grid">
+          <article class="why-ajmal-card">
+            <span>🥘</span>
+            <h3>Freshly Prepared</h3>
+            <p>
+              A menu built around generous portions, fresh ingredients and
+              flavours prepared with care.
+            </p>
+          </article>
+
+          <article class="why-ajmal-card">
+            <span>👨‍👩‍👧‍👦</span>
+            <h3>Made for Everyone</h3>
+            <p>
+              From breakfast and lunch to family dinners and celebrations,
+              Ajmal is designed for every kind of occasion.
+            </p>
+          </article>
+
+          <article class="why-ajmal-card">
+            <span>🎉</span>
+            <h3>Events & Catering</h3>
+            <p>
+              Planning a birthday, wedding or corporate gathering?
+              Our team can help you create a memorable Ajmal experience.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -173,7 +313,7 @@
           </label>
         </div>
 
-        <div class="menu-count-row"><span id="menuCount">0 items</span><span>Prices in KES</span></div>
+        <div class="menu-count-row"><span id="menuCount">Loading menu...</span><span>Prices in KES</span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-empty" id="menuEmpty" hidden><strong>No dishes found.</strong><span>Try another search or
             category.</span></div>
@@ -279,7 +419,7 @@
 
           <a
             class="text-link"
-            href="https://wa.me/254748974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27m%20interested%20in%20wedding%20catering."
+            href="https://wa.me/254749974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27m%20interested%20in%20wedding%20catering."
             target="_blank"
             rel="noopener"
           >
@@ -317,7 +457,7 @@
 
           <a
             class="text-link"
-            href="https://wa.me/254748974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27d%20like%20to%20plan%20a%20birthday%20celebration."
+            href="https://wa.me/254749974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27d%20like%20to%20plan%20a%20birthday%20celebration."
             target="_blank"
             rel="noopener"
           >
@@ -355,7 +495,7 @@
 
           <a
             class="text-link"
-            href="https://wa.me/254748974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27m%20interested%20in%20corporate%20catering."
+            href="https://wa.me/254749974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27m%20interested%20in%20corporate%20catering."
             target="_blank"
             rel="noopener"
           >
@@ -392,7 +532,7 @@
 
       <a
         class="button button-gold"
-        href="https://wa.me/254748974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27d%20like%20to%20make%20an%20event%20inquiry."
+        href="https://wa.me/254749974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27d%20like%20to%20make%20an%20event%20inquiry."
         target="_blank"
         rel="noopener"
       >
@@ -449,11 +589,23 @@
 
           <div class="location-detail">
 
+            <span>PHONE</span>
+
+            <strong>
+              <a class="ajmal-phone-link" href="tel:+254749974948">
+                0749974948
+              </a>
+            </strong>
+
+          </div>
+
+          <div class="location-detail">
+
             <span>OPENING</span>
 
             <strong>
-              Open Daily<br>
-              Breakfast · Lunch · Dinner
+              Monday – Sunday<br>
+              8:00 AM – 10:00 PM
             </strong>
 
           </div>
@@ -474,7 +626,7 @@
 
           <a
             class="button button-outline-dark"
-            href="https://wa.me/254748974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27m%20at%20BBS%20Mall."
+            href="https://wa.me/254749974948?text=Hello%20Ajmal%20Restaurant%2C%20I%27m%20at%20BBS%20Mall."
             target="_blank"
             rel="noopener"
           >
@@ -531,6 +683,61 @@
       </div>
     </section>
 
+
+    <!-- =====================================================
+         CUSTOMER REVIEWS
+         IMPORTANT: Replace these prompts with real customer
+         reviews before publishing them as testimonials.
+    ===================================================== -->
+    <section class="reviews-section page-section" id="reviews">
+      <div class="page-width">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker left">
+              <span></span> GUEST FEEDBACK
+            </div>
+            <h2 class="section-title">
+              Your experience <em>matters.</em>
+            </h2>
+          </div>
+        </div>
+
+        <div class="review-grid">
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <h3>Share your Ajmal experience</h3>
+            <p>
+              We would love to hear what you thought about the food,
+              service and atmosphere.
+            </p>
+          </article>
+
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <h3>Tell us what you loved</h3>
+            <p>
+              Customer feedback helps Ajmal continue improving the dining
+              experience for every guest.
+            </p>
+          </article>
+
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <h3>Leave a review</h3>
+            <p>
+              Add the restaurant's verified Google reviews here once the
+              official review link is available.
+            </p>
+          </article>
+        </div>
+
+        <p class="review-note">
+          Note: Only publish genuine customer reviews or verified Google
+          reviews. Do not use invented testimonials.
+        </p>
+      </div>
+    </section>
+
     <section class="gallery page-section" id="gallery">
       <div class="page-width">
         <div class="section-head">
@@ -563,13 +770,21 @@
           <div>
             <div class="section-kicker left"><span></span> COME VISIT US</div>
             <h2 class="section-title">Your table is <em>waiting.</em></h2>
-            <p>Ajmal Restaurant · Nairobi, Kenya<br>Open daily for breakfast, lunch and dinner.</p>
+            <p>
+              Ajmal Restaurant · BBS Mall, 2nd Floor · Eastleigh, Nairobi<br>
+              Monday – Sunday · 8:00 AM – 10:00 PM
+            </p>
+            <p class="contact-phone-row">
+              <a class="ajmal-phone-link" href="tel:+254749974948">
+                📞 0749974948
+              </a>
+            </p>
           </div>
           <div class="visit-actions">
             <a class="button button-gold"
               href="https://www.google.com/maps/search/?api=1&query=Ajmal+Restaurant+Nairobi" target="_blank"
               rel="noopener">Get Directions <span>↗</span></a>
-            <a class="button button-outline-dark" href="https://wa.me/254748974948" target="_blank"
+            <a class="button button-outline-dark" href="https://wa.me/254749974948" target="_blank"
               rel="noopener">WhatsApp Us</a>
           </div>
         </div>
@@ -589,11 +804,13 @@
       </div>
       <div>
         <h4>Visit</h4>
-        <p>Nairobi, Kenya</p>
-        <p>Open Daily</p>
+        <p>BBS Mall, 2nd Floor</p>
+        <p>Eastleigh, Nairobi</p>
+        <p>Mon – Sun · 8:00 AM – 10:00 PM</p>
+        <p><a class="ajmal-phone-link" href="tel:+254749974948">0749974948</a></p>
       </div>
       <div>
-        <h4>Connect</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="https://wa.me/254748974948"
+        <h4>Connect</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="https://wa.me/254749974948"
           target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
@@ -691,7 +908,7 @@
 <div class="mobile-action-bar">
 
   <a
-    href="tel:YOUR_PHONE_NUMBER"
+    href="tel:+254749974948"
     aria-label="Call Ajmal Restaurant"
   >
     <span>📞</span>
@@ -699,7 +916,7 @@
   </a>
 
   <a
-    href="https://wa.me/254748974948"
+    href="https://wa.me/254749974948"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="WhatsApp Ajmal Restaurant"
@@ -744,7 +961,7 @@
     <div class="restaurant-contact-actions">
 
       <a
-        href="tel:YOUR_PHONE_NUMBER"
+        href="tel:+254749974948"
         class="restaurant-contact-action"
       >
         <span class="contact-icon">📞</span>
@@ -757,7 +974,7 @@
 
 
       <a
-        href="https://wa.me/254748974948"
+        href="https://wa.me/254749974948"
         target="_blank"
         rel="noopener noreferrer"
         class="restaurant-contact-action"
@@ -772,7 +989,7 @@
 
 
       <a
-        href="YOUR_GOOGLE_MAPS_LINK"
+        href="https://www.google.com/maps/search/?api=1&query=BBS+Mall+Eastleigh+Nairobi"
         target="_blank"
         rel="noopener noreferrer"
         class="restaurant-contact-action"
