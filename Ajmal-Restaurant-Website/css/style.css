@@ -3018,3 +3018,21 @@ fieldset legend {
   }
 
 }
+
+/* =======================================================
+   STAFF LOGIN
+======================================================= */
+
+.staff-login-link {
+  display: inline-block;
+  margin-top: 14px;
+  color: #c9a45c !important;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.staff-login-link:hover {
+  color: #ffffff !important;
+  text-decoration: underline;
+}
